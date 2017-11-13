@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Messageboard</title>
+    <link rel="stylesheet" href="/assets/css/messageboard.css">
+</head>
+<body>
+    <h1>Messageboard</h1>
+
+    {% for message in messages %}
+        <div class="message">
+            {{message}}
+        </div>
+    {% endfor %}
+
+    <h1>Search</h1>
+    <form action="/search-message" method="post">
+        <input name="searchtext">
+    </form>
+
+    <h1>Post</h1>
+    <form action="/post-message" method="post">
+        <input name="messagetext">
+    </form>
+</body>
+</html>
