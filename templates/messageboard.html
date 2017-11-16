@@ -8,10 +8,10 @@
 <body>
     <h1>Messageboard</h1>
 
+    <h1>List of all messages</h1>
+
     {% for message in messages %}
-        <div class="message">
-            {{message}}
-        </div>
+        <p><a href="/message/{{ message.key.id() }}">{{ message.message_text }}</a></p>
     {% endfor %}
 
     <h1>Search</h1>

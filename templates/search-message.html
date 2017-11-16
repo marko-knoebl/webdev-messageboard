@@ -7,6 +7,10 @@
 <body>
     You searched for: {{searchtext}}
     <h2>results</h2>
-    {{searchresults}}
+    <ul>
+        {% for searchresult in searchresults %}
+            <li>{{searchresult}}</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

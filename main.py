@@ -36,6 +36,8 @@ messages = ['Hallo!', 'Wie gehts', 'abasd', 'dasda']
 
 class MessageboardHandler(BaseHandler):
     def get(self):
+        messages = Message.query().fetch()
+
         return self.render_template('messageboard.html', {'messages': messages})
 
 class SearchHandler(BaseHandler):
@@ -44,7 +46,7 @@ class SearchHandler(BaseHandler):
         searchtext = self.request.get('searchtext')
         searchresults = []
         for message in messages:
-            if searchtext.lower() in message.lower():
+            if searchtext.lower() in message.messagetext.lower():
                 searchresults.append(message)
         return self.render_template('search-message.html',
                  {'searchtext': searchtext, 'searchresults': searchresults})
@@ -63,9 +65,16 @@ class PostHandler(BaseHandler):
 
         return self.render_template('message-posted.html')
 
+class MessageDetailsHandler(BaseHandler):
+    def get(self, message_id):
+        message = Message.get_by_id(int(message_id))
+        params = {"message": message}
+        return self.render_template("message_details.html", params=params)
+
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
     webapp2.Route('/messageboard', MessageboardHandler),
     webapp2.Route('/search-message', SearchHandler),
     webapp2.Route('/post-message', PostHandler),
+    webapp2.Route('/message/<message_id:\d+>', MessageDetailsHandler)
 ], debug=True)
